@@ -25,4 +25,12 @@ public interface GoodsApi {
             @RequestParam(value = "page", defaultValue = "1")Integer page,
             @RequestParam(value = "rows", defaultValue = "5")Integer rows
     );
+
+    /**
+     * 根据spu的id查询spu
+     * @param id
+     * @return
+     */
+    @GetMapping("spu/{id}")
+    Spu querySpuById(@PathVariable("id") Long id);
 }

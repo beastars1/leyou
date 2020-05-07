@@ -44,4 +44,14 @@ public class CategoryController {
     public ResponseEntity<List<Category>> queryCategoryByIds(@RequestParam("ids")List<Long> ids){
         return ResponseEntity.ok(categoryService.queryCategoryByIds(ids));
     }
+
+    /**
+     * 根据3级分类id，查询1~3级的分类
+     * @param id
+     * @return
+     */
+    @GetMapping("all/level")
+    public ResponseEntity<List<Category>> queryAllByCid3(@RequestParam("id")Long id){
+        return ResponseEntity.ok(categoryService.queryAllByCid3(id));
+    }
 }

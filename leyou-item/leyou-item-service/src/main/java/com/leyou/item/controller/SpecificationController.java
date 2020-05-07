@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Id;
 import java.util.List;
 import java.util.Map;
 
@@ -49,5 +50,15 @@ public class SpecificationController {
     public ResponseEntity<Void> saveSpecGroup(@RequestBody Map<String, Object> map){
         specificationService.saveSpecGroup(map);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    /**
+     * 根据分类cid查询规格参数组，及组内参数
+     * @param cid
+     * @return
+     */
+    @GetMapping("group")
+    public ResponseEntity<List<SpecGroup>> queryGroupByCid(@RequestParam("cid")Long cid){
+        return ResponseEntity.ok(specificationService.queryGroupByCid(cid));
     }
 }

@@ -226,4 +226,20 @@ public class GoodsService {
         // 批量新增库存
         stockMapper.insertList(stockList);
     }
+
+    public Spu querySpuById(Long id) {
+        // 查询spu
+        Spu spu = spuMapper.selectByPrimaryKey(id);
+        if (spu == null){
+            throw new LyException(ExceptionEnum.GOODS_NOT_FIND);
+        }
+
+        // 查询sku
+        spu.setSkus(querySkuListBySpuId(id));
+
+        // 查询spuDetail
+        spu.setSpuDetail(querySpuDetailBySpuId(id));
+
+        return spu;
+    }
 }

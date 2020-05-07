@@ -15,6 +15,7 @@
         <module>leyou-common</module>
         <module>leyou-upload</module>
         <module>leyou-search</module>
+        <module>leyou-page</module>
     </modules>
     <name>leyou</name>
     <description>Demo project for Spring Boot</description>
