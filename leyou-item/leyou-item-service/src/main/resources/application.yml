@@ -7,6 +7,19 @@ spring:
     url: jdbc:mysql:///leyou?serverTimezone=UTC
     username: root
     password: root
+  rabbitmq:
+    host: 192.168.150.128
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
+    template:
+      retry:
+        enabled: true
+        initial-interval: 10000ms
+        max-interval: 30000ms
+        multiplier: 2
+      exchange: ly.item.exchange
+    publisher-confirm-type: correlated
 eureka:
   client:
     service-url:

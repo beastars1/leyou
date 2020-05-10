@@ -64,9 +64,10 @@ public class PageService {
 
     /**
      * 创建html文件
+     *
      * @param spuId
      */
-    public void createHtml(Long spuId){
+    public void createHtml(Long spuId) {
         // 创建上下文
         Context context = new Context();
         // 把数据加入上下文
@@ -74,11 +75,23 @@ public class PageService {
 
         // 创建输出流
         File disk = new File("F:\\develop\\nginx-1.16.1\\html\\item", spuId + ".html");
-        try(PrintWriter writer = new PrintWriter(disk, "utf-8")){
+
+        if (disk.exists()) {
+            disk.delete();
+        }
+
+        try (PrintWriter writer = new PrintWriter(disk, "utf-8")) {
             // 生成html
             templateEngine.process("item", context, writer);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("[静态页服务] 生产静态页异常!", e);
+        }
+    }
+
+    public void deleteIndex(Long spuId) {
+        File disk = new File("F:\\develop\\nginx-1.16.1\\html\\item", spuId + ".html");
+        if (disk.exists()) {
+            disk.delete();
         }
     }
 }

@@ -8,6 +8,11 @@ spring:
     cache: false
   main:
     allow-bean-definition-overriding: true
+  rabbitmq:
+    host: 192.168.150.128
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
 eureka:
   client:
     service-url:

@@ -59,7 +59,7 @@ public class SearchService {
     @Autowired
     private ElasticsearchTemplate template;
 
-    public Goods buildGoods(Spu spu){
+    public Goods buildGoods(Spu spu) {
         Long id = spu.getId();
 
         // 查询分类
@@ -98,7 +98,8 @@ public class SearchService {
         Map<Long, String> genericSpec = JsonUtils.toMap(spuDetail.getGenericSpec(), Long.class, String.class);
         // 获取特有规格参数
         Map<Long, List<String>> specialSpec = JsonUtils
-                .nativeRead(spuDetail.getSpecialSpec(), new TypeReference<Map<Long, List<String>>>() {});
+                .nativeRead(spuDetail.getSpecialSpec(), new TypeReference<Map<Long, List<String>>>() {
+                });
         // 规格参数
         Map<String, Object> specs = new HashMap<>();
         for (SpecParam param : paramList) {
@@ -106,9 +107,9 @@ public class SearchService {
             String key = param.getName();
             Object value = "";
             // 判断是否是通用规格
-            if (param.getGeneric()){
+            if (param.getGeneric()) {
                 value = genericSpec.get(param.getId());
-                if (param.getNumeric()){
+                if (param.getNumeric()) {
                     // 处理成段
                     value = chooseSegment(value.toString(), param);
                 }
@@ -145,16 +146,16 @@ public class SearchService {
             // 获取数值范围
             double begin = NumberUtils.toDouble(segs[0]);
             double end = Double.MAX_VALUE;
-            if(segs.length == 2){
+            if (segs.length == 2) {
                 end = NumberUtils.toDouble(segs[1]);
             }
             // 判断是否在范围内
-            if(val >= begin && val < end){
-                if(segs.length == 1){
+            if (val >= begin && val < end) {
+                if (segs.length == 1) {
                     result = segs[0] + p.getUnit() + "以上";
-                }else if(begin == 0){
+                } else if (begin == 0) {
                     result = segs[1] + p.getUnit() + "以下";
-                }else{
+                } else {
                     result = segment + p.getUnit();
                 }
                 break;
@@ -166,7 +167,7 @@ public class SearchService {
     public PageResult<Goods> search(SearchRequest searchRequest) {
         String key = searchRequest.getKey();
         // 判断是否有搜索条件，如果没有直接返回null，不允许搜索全部商品
-        if (StringUtils.isBlank(key)){
+        if (StringUtils.isBlank(key)) {
             return null;
         }
 
@@ -206,7 +207,7 @@ public class SearchService {
 
         // 完成规格参数聚合
         List<Map<String, Object>> specs = null;
-        if (CollectionUtils.isEmpty(specs) && categories.size() == 1){
+        if (CollectionUtils.isEmpty(specs) && categories.size() == 1) {
             // 商品分类存在并且数量为1，可以聚合规格参数
             specs = buildSpecificationAgg(categories.get(0).getId(), basicQuery);
         }
@@ -224,7 +225,7 @@ public class SearchService {
         for (Map.Entry<String, String> entry : filter.entrySet()) {
             // 处理key
             String key = entry.getKey();
-            if (!"cid".equals(key) && !"brandId".equals(key)){
+            if (!"cid".equals(key) && !"brandId".equals(key)) {
                 key = "specs." + key + ".keyword";
             }
             String value = entry.getValue();
@@ -244,7 +245,7 @@ public class SearchService {
         queryBuilder.withQuery(basicQuery);
         // 2.2 聚合
         paramList.forEach(param -> queryBuilder.addAggregation(AggregationBuilders
-                .terms(param.getName()).field("specs."+param.getName()+".keyword")));
+                .terms(param.getName()).field("specs." + param.getName() + ".keyword")));
         // 3 获取结果
         AggregatedPage<Goods> result = template.queryForPage(queryBuilder.build(), Goods.class);
         // 4 解析结果
@@ -285,5 +286,18 @@ public class SearchService {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public void createOrUpdateIndex(Long spuId) {
+        // 查询spu
+        Spu spu = goodsClient.querySpuById(spuId);
+        // 构建goods对象
+        Goods goods = buildGoods(spu);
+        // 存入索引库
+        goodsRepository.save(goods);
+    }
+
+    public void deleteIndex(Long spuId) {
+        goodsRepository.deleteById(spuId);
     }
 }
