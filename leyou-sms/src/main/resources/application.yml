@@ -8,9 +8,11 @@ spring:
     username: leyou
     password: leyou
     virtual-host: /leyou
+  redis:
+    host: 192.168.150.128
 ly:
   sms:
     accessKeyId: LTAI4G64W3rjjbnh3Asu61WH # 你自己的accessKeyId
     accessKeySecret: brCpYgdV4y1SpgIr10v62Kkjjx89CF # 你自己的AccessKeySecret
-    signName: 乐优商城 # 签名名称
+    signName: 乐游网吧 # 签名名称
     verifyCodeTemplate: SMS_188991470 # 模板名称

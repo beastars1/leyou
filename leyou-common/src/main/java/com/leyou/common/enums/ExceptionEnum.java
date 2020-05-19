@@ -21,7 +21,11 @@ public enum ExceptionEnum {
     GOODS_NOT_FIND(404, "未查询到商品"),
     GOODS_UPDATE_ERROR(500, "商品更新错误"),
     SAVE_GOOD_ERROR(500, "新增商品失败"),
-    GOODS_ID_CANNOT_BE_NULL(400, "商品id不能为空")
+    GOODS_ID_CANNOT_BE_NULL(400, "商品id不能为空"),
+    INVALID_USER_DATA_TYPE(400, "用户数据类型无效"),
+    SAVE_USER_ERROR(500, "新增用户失败"),
+    USER_NOT_FIND(404, "用户不存在"),
+    QUERY_USER_ERROR(404, "查询用户失败")
     ;
     private Integer code;
     private String msg;

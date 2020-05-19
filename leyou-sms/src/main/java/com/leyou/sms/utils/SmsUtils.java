@@ -10,9 +10,13 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.leyou.sms.config.SmsProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.TimeUnit;
 
 @EnableConfigurationProperties(SmsProperties.class)
 @Component
@@ -22,12 +26,29 @@ public class SmsUtils {
     @Autowired
     private SmsProperties prop;
 
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
     //产品名称:云通信短信API产品,开发者无需替换
     static final String product = "Dysmsapi";
     //产品域名,开发者无需替换
     static final String domain = "dysmsapi.aliyuncs.com";
 
+    private static final String KEY_VERIFY = "sms:phone:";
+    private static final long SMS_MIN_INTERVAL_IN_MILLIS = 60000;
+
     public SendSmsResponse sendSms(String phone, String code, String signName, String template) {
+        String key = KEY_VERIFY + phone;
+        // 按照手机号限流
+        // 读取时间
+        String lastTime = redisTemplate.opsForValue().get(key);
+        if (StringUtils.isNotBlank(lastTime)) {
+            long last = Long.parseLong(lastTime);
+            if (System.currentTimeMillis() - last < SMS_MIN_INTERVAL_IN_MILLIS) {
+                log.info("[短信服务] 发送短信频率过高，被拦截，手机号码：{}", phone);
+                return null;
+            }
+        }
 
         try {
             //可自助调整超时时间
@@ -63,6 +84,12 @@ public class SmsUtils {
 
             log.info("发送短信状态：{}", sendSmsResponse.getCode());
             log.info("发送短信消息：{}", sendSmsResponse.getMessage());
+
+            // 发送短信成功以后，写入redis,指定生存时间为1分钟
+            redisTemplate.opsForValue().set(key, String.valueOf(System.currentTimeMillis()), 1, TimeUnit.MINUTES);
+
+            // 发送短信日志
+            log.info("[短信服务] 发送短信验证码，手机号{}", phone);
 
             return sendSmsResponse;
         } catch (Exception e) {
