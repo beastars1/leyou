@@ -18,6 +18,7 @@
         <module>leyou-page</module>
         <module>leyou-sms</module>
         <module>leyou-user</module>
+        <module>leyou-auth</module>
     </modules>
     <name>leyou</name>
     <description>Demo project for Spring Boot</description>

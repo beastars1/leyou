@@ -25,7 +25,8 @@ public enum ExceptionEnum {
     INVALID_USER_DATA_TYPE(400, "用户数据类型无效"),
     SAVE_USER_ERROR(500, "新增用户失败"),
     USER_NOT_FIND(404, "用户不存在"),
-    QUERY_USER_ERROR(404, "查询用户失败")
+    QUERY_USER_ERROR(404, "查询用户失败"),
+    AUTH_ERROR(500, "授权出错")
     ;
     private Integer code;
     private String msg;
