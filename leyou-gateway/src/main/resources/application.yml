@@ -19,6 +19,8 @@ zuul:
       path: /upload/**
       serviceId: upload-service
       strip-prefix: false
+  add-host-header: true  # 携带请求本身的host头信息
+  sensitive-headers:  # 覆盖默认敏感头信息，设置为空，否则set-cookie无效
 ribbon:
   ConnectTimeout: 1000 # 连接超时时间(ms)
   ReadTimeout: 3500 # 通信超时时间(ms)
@@ -31,3 +33,15 @@ hystrix:
         isolation:
           thread:
             timeoutInMillisecond: 5000 # 熔断超时时长：10000ms
+ly:
+  jwt:
+    pubKeyPath: F:\test\rsa\rsa.pub # 公钥地址
+    cookieName: LY_TOKEN
+  filter:
+    allowPaths:
+      - /api/auth
+      - /api/search
+      - /api/user/register
+      - /api/user/check
+      - /api/user/code
+      - /api/item
