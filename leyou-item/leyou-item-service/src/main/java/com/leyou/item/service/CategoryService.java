@@ -25,7 +25,7 @@ public class CategoryService {
         List<Category> list = categoryMapper.select(category);
 //        if (list == null || list.isEmpty())
         // 判断结果
-        if (CollectionUtils.isEmpty(list)){
+        if (CollectionUtils.isEmpty(list)) {
             throw new LyException(ExceptionEnum.CATEGORY_NOT_FIND);
         }
         return list;
@@ -33,12 +33,13 @@ public class CategoryService {
 
     /**
      * 查询单个商品分类
+     *
      * @param bid
      * @return
      */
     public List<Category> queryCategoryByBid(Long bid) {
         List<Category> list = categoryMapper.queryCategoryByBid(bid);
-        if (CollectionUtils.isEmpty(list)){
+        if (CollectionUtils.isEmpty(list)) {
             throw new LyException(ExceptionEnum.CATEGORY_NOT_FIND);
         }
         return list;
@@ -46,12 +47,13 @@ public class CategoryService {
 
     /**
      * 通过id数组查询一组商品分类
+     *
      * @param ids
      * @return
      */
     public List<Category> queryCategoryByIds(List<Long> ids) {
         List<Category> list = categoryMapper.selectByIdList(ids);
-        if (CollectionUtils.isEmpty(list)){
+        if (CollectionUtils.isEmpty(list)) {
             throw new LyException(ExceptionEnum.CATEGORY_NOT_FIND);
         }
         return list;
@@ -63,7 +65,7 @@ public class CategoryService {
         Category c1 = categoryMapper.selectByPrimaryKey(c2.getParentId());
 
         List<Category> list = Arrays.asList(c1, c2, c3);
-        if (CollectionUtils.isEmpty(list)){
+        if (CollectionUtils.isEmpty(list)) {
             throw new LyException(ExceptionEnum.CATEGORY_NOT_FIND);
         }
         return list;

@@ -19,6 +19,7 @@
         <module>leyou-sms</module>
         <module>leyou-user</module>
         <module>leyou-auth</module>
+        <module>leyou-cart</module>
     </modules>
     <name>leyou</name>
     <description>Demo project for Spring Boot</description>

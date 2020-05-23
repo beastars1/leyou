@@ -22,6 +22,7 @@ public class GoodsController {
 
     /**
      * 分页查询spu
+     *
      * @param key
      * @param saleable
      * @param page
@@ -30,63 +31,79 @@ public class GoodsController {
      */
     @GetMapping("spu/page")
     public ResponseEntity<PageResult<Spu>> querySpuByPage(
-            @RequestParam(value = "key", required = false)String key,
-            @RequestParam(value = "saleable", required = false)Boolean saleable,
-            @RequestParam(value = "page", defaultValue = "1")Integer page,
-            @RequestParam(value = "rows", defaultValue = "5")Integer rows
-    ){
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "saleable", required = false) Boolean saleable,
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "5") Integer rows
+    ) {
         return ResponseEntity.ok(goodsService.querySpuByPage(key, saleable, page, rows));
     }
 
     /**
      * 新增spu
+     *
      * @param spu
      * @return
      */
     @PostMapping("goods")
-    public ResponseEntity<Void> saveGoods(@RequestBody Spu spu){
+    public ResponseEntity<Void> saveGoods(@RequestBody Spu spu) {
         goodsService.saveGoods(spu);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     /**
      * 根据spu的id查询spu的detail
+     *
      * @param spuId
      * @return
      */
     @GetMapping("spu/detail/{spuId}")
-    public ResponseEntity<SpuDetail> querySpuDetailBySpuId(@PathVariable Long spuId){
+    public ResponseEntity<SpuDetail> querySpuDetailBySpuId(@PathVariable Long spuId) {
         return ResponseEntity.ok(goodsService.querySpuDetailBySpuId(spuId));
     }
 
     /**
      * 根据spu的id查询sku
+     *
      * @param spuId
      * @return
      */
     @GetMapping("sku/list")
-    public ResponseEntity<List<Sku>> querySkuListBySpuId(@RequestParam("id")Long spuId){
+    public ResponseEntity<List<Sku>> querySkuListBySpuId(@RequestParam("id") Long spuId) {
         return ResponseEntity.ok(goodsService.querySkuListBySpuId(spuId));
     }
 
     /**
      * 更新spu
+     *
      * @param spu
      * @return
      */
     @PutMapping("goods")
-    public ResponseEntity<Void> updateGoods(@RequestBody Spu spu){
+    public ResponseEntity<Void> updateGoods(@RequestBody Spu spu) {
         goodsService.updateGoods(spu);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     /**
      * 根据spu的id查询spu
+     *
      * @param id
      * @return
      */
     @GetMapping("spu/{id}")
-    public ResponseEntity<Spu> querySpuById(@PathVariable("id") Long id){
+    public ResponseEntity<Spu> querySpuById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(goodsService.querySpuById(id));
+    }
+
+    /**
+     * 根据sku的id集合查询所有sku
+     *
+     * @param ids
+     * @return
+     */
+    @GetMapping("sku/list/ids")
+    public ResponseEntity<List<Sku>> querySkusByIds(@RequestParam("ids") List<Long> ids) {
+        return ResponseEntity.ok(goodsService.querySkusByIds(ids));
     }
 }

@@ -26,7 +26,8 @@ public enum ExceptionEnum {
     SAVE_USER_ERROR(500, "新增用户失败"),
     USER_NOT_FIND(404, "用户不存在"),
     QUERY_USER_ERROR(404, "查询用户失败"),
-    AUTH_ERROR(500, "授权出错")
+    AUTH_ERROR(500, "授权出错"),
+    CART_NOT_FOUND(404, "购物车为空")
     ;
     private Integer code;
     private String msg;

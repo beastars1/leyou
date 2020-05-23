@@ -267,4 +267,20 @@ public class GoodsService {
             log.error("{}商品消息发送异常，商品id：{}", type, id, e);
         }
     }
+
+    public List<Sku> querySkusByIds(List<Long> ids) {
+        List<Sku> skuList = skuMapper.selectByIdList(ids);
+
+        if (CollectionUtils.isEmpty(skuList)) {
+            throw new LyException(ExceptionEnum.GOODS_NOT_FIND);
+        }
+
+        // 查询对应库存
+        skuList.forEach(s -> {
+            Stock stock = stockMapper.selectByPrimaryKey(s.getId());
+            s.setStock(stock.getStock());
+        });
+
+        return skuList;
+    }
 }

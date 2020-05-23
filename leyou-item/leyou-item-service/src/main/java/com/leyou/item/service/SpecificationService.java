@@ -25,6 +25,7 @@ public class SpecificationService {
 
     /**
      * 查询规格组
+     *
      * @param cid
      * @return
      */
@@ -32,7 +33,7 @@ public class SpecificationService {
         SpecGroup specGroups = new SpecGroup();
         specGroups.setCid(cid);
         List<SpecGroup> groupList = specGroupMapper.select(specGroups);
-        if (CollectionUtils.isEmpty(groupList)){
+        if (CollectionUtils.isEmpty(groupList)) {
             throw new LyException(ExceptionEnum.SPEC_GROUP_NOT_FIND);
         }
         return groupList;
@@ -44,7 +45,7 @@ public class SpecificationService {
         specParam.setCid(cid);
         specParam.setSearching(searching);
         List<SpecParam> paramList = specParamMapper.select(specParam);
-        if (CollectionUtils.isEmpty(paramList)){
+        if (CollectionUtils.isEmpty(paramList)) {
             throw new LyException(ExceptionEnum.SPEC_PARAM_NOT_FIND);
         }
         return paramList;
@@ -52,7 +53,7 @@ public class SpecificationService {
 
     public void deleteSpecGroupByGid(Long gid) {
         int i = specGroupMapper.deleteByPrimaryKey(gid);
-        if (i != 0){
+        if (i != 0) {
             throw new LyException(ExceptionEnum.SPEC_GROUP_NOT_FIND);
         }
     }
@@ -64,13 +65,14 @@ public class SpecificationService {
         specGroup.setCid(cid);
         specGroup.setName(name);
         int count = specGroupMapper.insert(specGroup);
-        if (count != 1){
+        if (count != 1) {
             throw new LyException(ExceptionEnum.SAVE_SPEC_GROUP_ERROR);
         }
     }
 
     /**
      * 查询规格参数组
+     *
      * @param cid
      * @return
      */
@@ -83,7 +85,7 @@ public class SpecificationService {
         // 先把规格参数变成map，map的key是规格组id，map的值是组下的所有参数
         Map<Long, List<SpecParam>> map = new HashMap<>();
         for (SpecParam param : specParams) {
-            if (!map.containsKey(param.getGroupId())){
+            if (!map.containsKey(param.getGroupId())) {
                 // 这个组id在map中不存在，新增一个list
                 map.put(param.getGroupId(), new ArrayList<>());
             }
