@@ -104,4 +104,10 @@ public class CartService {
         // 删除
         redisTemplate.opsForHash().delete(key, skuId.toString());
     }
+
+    public void addCartList(List<Cart> carts) {
+        for (Cart cart : carts) {
+            addCart(cart);
+        }
+    }
 }

@@ -62,4 +62,10 @@ public class CartController {
         cartService.deleteCart(skuId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @PostMapping("list")
+    public ResponseEntity<Void> addLocalCart(@RequestBody List<Cart> carts) {
+        cartService.addCartList(carts);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 }
