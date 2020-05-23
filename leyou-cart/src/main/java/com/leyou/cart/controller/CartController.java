@@ -63,6 +63,12 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    /**
+     * 将本地存储的购物车商品添加到redis中
+     *
+     * @param carts
+     * @return
+     */
     @PostMapping("list")
     public ResponseEntity<Void> addLocalCart(@RequestBody List<Cart> carts) {
         cartService.addCartList(carts);
