@@ -16,6 +16,7 @@ zuul:
     user-service: /user/**  # 用户微服务的映射路径
     auth-service: /auth/**  # 授权微服务的映射路径
     cart-service: /cart/**  # 购物车微服务的映射路径
+    order-service: /order/**  # 订单微服务的映射路径
     upload-service:  # 图片上传的映射路径
       path: /upload/**
       serviceId: upload-service

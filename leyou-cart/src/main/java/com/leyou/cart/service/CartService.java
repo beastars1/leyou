@@ -1,7 +1,7 @@
 package com.leyou.cart.service;
 
 import com.leyou.auth.pojo.UserInfo;
-import com.leyou.cart.interceptor.UserInterceptor;
+import com.leyou.cart.interceptors.UserInterceptor;
 import com.leyou.cart.pojo.Cart;
 import com.leyou.common.enums.ExceptionEnum;
 import com.leyou.common.exception.LyException;

@@ -20,6 +20,7 @@
         <module>leyou-user</module>
         <module>leyou-auth</module>
         <module>leyou-cart</module>
+        <module>leyou-order</module>
     </modules>
     <name>leyou</name>
     <description>Demo project for Spring Boot</description>
@@ -41,7 +42,7 @@
         <druid.starter.version>1.1.21</druid.starter.version>
         <mysql.version>8.0.19</mysql.version>
         <pageHelper.starter.version>1.2.13</pageHelper.starter.version>
-        <leyou.latest.version>1.0.0-SNAPSHOT</leyou.latest.version>
+        <leyou.latest.version>1.0-SNAPSHOT</leyou.latest.version>
         <fastDFS.client.version>1.27.2</fastDFS.client.version>
     </properties>
 

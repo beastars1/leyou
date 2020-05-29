@@ -27,7 +27,12 @@ public enum ExceptionEnum {
     USER_NOT_FIND(404, "用户不存在"),
     QUERY_USER_ERROR(404, "查询用户失败"),
     AUTH_ERROR(500, "授权出错"),
-    CART_NOT_FOUND(404, "购物车为空")
+    CART_NOT_FOUND(404, "购物车为空"),
+    CREAT_ORDER_ERROR(500, "创建订单失败"),
+    STOCK_NOT_ENOUGH(500, "库存不足"),
+    ORDER_NOT_FOUND(404, "订单不存在"),
+    ORDER_DETAIL_NOT_FOUND(404, "订单详情不存在"),
+    ORDER_STATUS_NOT_FOUND(404, "订单状态不存在")
     ;
     private Integer code;
     private String msg;
