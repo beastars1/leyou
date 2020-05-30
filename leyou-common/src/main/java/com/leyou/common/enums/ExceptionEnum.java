@@ -32,7 +32,12 @@ public enum ExceptionEnum {
     STOCK_NOT_ENOUGH(500, "库存不足"),
     ORDER_NOT_FOUND(404, "订单不存在"),
     ORDER_DETAIL_NOT_FOUND(404, "订单详情不存在"),
-    ORDER_STATUS_NOT_FOUND(404, "订单状态不存在")
+    ORDER_STATUS_NOT_FOUND(404, "订单状态不存在"),
+    WX_PAY_ORDER_FAIL(500, "微信下单失败"),
+    ORDER_STATUS_ERROR(400, "订单状态不正常"),
+    INVALID_SIGN_ERROR(400, "无效的签名异常"),
+    INVALID_ORDER_PARAM(400, "无效的订单参数"),
+    UPDATE_ORDER_STATUS_ERROR(500, "更新订单状态失败")
     ;
     private Integer code;
     private String msg;
